@@ -1,0 +1,229 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[left=.75in, right=.75in, top=.15in, bottom=.75in]{geometry}
+%\usepackage{pgfplots} %Para hacer gráficas
+\usepackage{amsmath}
+%\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage{theorem}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage[usenames]{color}
+
+\newtheorem{Teor}{Teorem}
+
+\begin{document}
+	
+	\title{From Optical Profilometry to Fabrication: A Multifrequency Temporal Approach for Custom Breast Prostheses}
+	\author{
+		\normalsize{Susana Burnes-Rudecino$^a$, Gamaliel Moreno $^a$, Araceli $^a$, Jesús Villa$^a$, }\\
+        \normalsize{Ismael De la Rosa $^{a,*}$,Rosario Baltazar $^b$,  Efrén Bañuelos$^a$.}\\ \\
+		\scriptsize{$^{a}$Unidad Académica de Ingeniería Eléctrica, Universidad Autónoma de Zacatecas, Campus Universitario UAZ Siglo XXI,}\\
+		\scriptsize{Edificio E-14, C.P. 98107, Zacatecas, México.}\\
+		\scriptsize{$^{b}$Unidad de Sistemas y Ciencias Computacionales, Tecnológico Nacional de México, Campus León}\\
+		\scriptsize{León, Guanajuato, México.}\\
+		\scriptsize{$^{*}$Corresponding author: \texttt{gamalielmch@uaz.edu.mx}}
+	}
+	\date{}
+	
+	\maketitle
+	
+	\begin{abstract}
+        
+The development of personalized external breast prostheses has gained increasing attention due to the need for improved comfort, anatomical accuracy, and quality of life in post-mastectomy patients. This study presents a pilot methodology that integrates optical profilometry and additive manufacturing for the design and fabrication of patient-specific prosthetic devices. A non-invasive fringe projection system was employed to capture the thoracic surface geometry, enabling high-resolution three-dimensional reconstruction through temporal phase-shifting techniques. The resulting digital model was processed using computer-aided design tools to generate a customized prosthesis, which was subsequently fabricated through fused deposition modeling and silicone casting. 
+
+The results demonstrate that the proposed approach achieves accurate anatomical representation, adequate mechanical properties, and satisfactory surface quality. Minor reconstruction artifacts were observed but effectively mitigated through filtering techniques. The integration of digital acquisition and manufacturing technologies provides a cost-effective, reproducible, and patient-centered alternative to conventional methods. This methodology shows strong potential for clinical application and future optimization toward improved robustness and functional performance.
+\end{abstract}
+	
+	\section{Introduction}
+
+The development of external breast prostheses lies at the intersection of biomechanics, biomedical engineering, mastology, and physical rehabilitation. Over the past five years, a clear trend has emerged toward personalization, improved comfort, and the reduction of adverse effects associated with prolonged use, such as musculoskeletal pain and postural alterations \cite{ACS2023,Surmeli2025}. Recent studies report that prostheses manufactured using conventional methods may lead to postural compensations, increased load in the cervical and dorsal regions, as well as gait alterations \cite{Koralewska2022}. 
+
+In response, recent research has focused on the development of lighter prostheses using low-density silicones, advanced gels, and internal structures that redistribute weight more efficiently. Currently, a wide variety of options exist according to individual needs, including variations in size, shape, weight, color, material, and texture, as well as configurations with or without nipple and areola, self-adhesive systems, and designs adapted for different sports activities \cite{Crompvoets2012,Fitch2012,Livingston2005}.
+
+One of the main innovations in this field is the incorporation of digital technologies, such as three-dimensional (3D) scanning and additive manufacturing. Methods based on structured light and optical profilometry offer advantages such as being non-invasive, fast, and non-ionizing. These systems generate high-resolution point clouds or meshes that accurately reproduce the topology of the chest wall and the contour of the contralateral healthy breast, serving as a baseline for prosthesis design. This technology has significantly impacted plastic and reconstructive surgery, as well as prosthesis design and robust breast volume monitoring \cite{Kastrup2024,Dijkman2024}. 
+
+Structured-light-based methods stand out due to their ability to model patient anatomy with high precision, improving both symmetry and adaptation to body contour, which positively influences posture and body image perception \cite{Eggbeer2011,Paxton2022}.
+
+From a design perspective, modern prostheses incorporate breathable surfaces, hypoallergenic materials, and improved adhesion systems that enable direct fixation to the skin, reducing dependence on specialized garments \cite{WHO2021}. Additionally, partial and modular prostheses have been developed to allow progressive adjustments according to patient needs. The state of the art also reflects a shift in clinical focus: aesthetics is no longer the sole priority, but rather a comprehensive approach centered on quality of life \cite{Casanovas}, including evaluation of posture, body balance, and pain prevention, as well as support during physical and emotional adaptation following mastectomy \cite{Aakin2026,Hojan2016}. 
+
+Overall, recent advances indicate a transition toward more functional, personalized, and patient-centered prostheses, integrating biomechanical and technological principles to enhance user experience and reduce associated complications.
+
+The state of the art in methodologies for the design and fabrication of personalized external breast prostheses is based on 3D modeling and additive manufacturing, which have proven to be more viable compared to traditional methods \cite{ASME2024,Montejo2020}. Similarly, biomimetic approaches have been introduced in the design of complete prostheses, emphasizing the replication of anatomical and functional characteristics to achieve improved aesthetic and biomechanical integration \cite{Cruz2018}. 
+
+In particular, additive manufacturing has gained relevance as a key technology in this field. Recent studies have explored the complete process of design, fabrication, and mechanical characterization of external breast prostheses, highlighting the importance of evaluating material properties to ensure performance \cite{Cansing2024}. In the same direction, research has focused on the development of advanced architected materials aimed at improving prosthesis functionality and adaptability \cite{Zhang2025}. 
+
+Additionally, efforts have been made to improve accessibility and reduce costs. Ergonomic methods for manufacturing customized prostheses using low-cost technologies have been proposed \cite{Regina2024}, and pilot studies on personalized silicone prostheses produced through additive manufacturing have demonstrated clinical feasibility and positive user impact \cite{Leme2023}. 
+
+In this context, a pilot study is proposed in Zacatecas for the development of personalized external breast prostheses. The approach considers the thoracic topology of the contralateral healthy region of a breast cancer survivor who underwent unilateral mastectomy. The acquisition stage employs optical profilometry using temporal sequential analysis. Subsequently, a 3D model is obtained through phase retrieval, filtering, and preprocessing techniques to enable additive manufacturing. Finally, a personalized external silicone prosthesis is produced.
+
+This paper is organized as follows: Section I presents the introduction, Section II describes the methodology, Section III discusses the results, and Section IV provides the conclusions.
+
+
+%_______________________________	
+\section{Materials and Methods}
+
+This study proposes a methodology for the design and fabrication of customized external breast prostheses based on optical acquisition, digital modeling, and additive manufacturing.
+
+The breast surface was acquired using a non-invasive optical profilometry system based on fringe projection. A Sony MP-CL1A portable projector with a resolution of $1920 \times 720$ pixels and $40$ lumens was used to project sinusoidal fringe patterns, as \eqref{Eq:01}, onto the surface. 
+
+	\begin{equation}
+		f(x)=I_0+ I_1 \cos(2\pi f_0+\phi).
+		\label{Eq:01}
+	\end{equation}
+    
+The deformation of these patterns, caused by variations in surface geometry, was captured using a Point-Grey CCD camera (model FL3-U3-12Y3M-C) with a resolution of $1280 \times 960$ pixels and a $12$ mm lens. The projector and camera were positioned at a known angle to ensure accurate triangulation, as Figure (\ref{Fig:02}) shows.
+
+ \begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.5\linewidth]{SISTEMA.png}
+	\end{center}
+    \caption{Diagram of the physical arrangement of crossed optical axes \cite{Zhang2025}.}
+    \label{Fig:01}
+    \end{figure}
+
+The captured fringe patterns were processed using a temporal phase-shifting algorithm to retrieve phase information. Phase unwrapping and spatial filtering techniques were applied to reduce noise and improve reconstruction accuracy. An exponential multifrequency temporal method for three-steps was used as \eqref{Eq:02}. With a set of temporally phase-shifted fringe patterns with exponentially varying frequencies to enhance phase sensitivity and improve measurement robustness. 
+
+\begin{equation}
+\phi(x,y)=\tan^{-1}\left(\frac{\sqrt{3}\,(I_1-I_3)}{2I_2-I_1-I_3}\right)
+\label{Eq:02}
+\end{equation}
+
+The resulting phase map was converted into a three-dimensional model representing the breast surface. The model was processed using computer-aided design (CAD) tools. MeshLab was used for noise removal and mesh generation, while Ultimaker Cura was employed to prepare the model for fabrication. The data processing was calculated using an Intel(R) Core(TM) i5-7200U $2.5$ GHz processor with $8$ GB of RAM. Mirror symmetry techniques were applied to reconstruct the geometry of the affected side based on the contralateral breast. Then the model was printed on a Creality Ender-3 Pro 3D printer using PLA filament. 
+
+Finally, medical-grade silicone (Dragon Skin FX Pro) was cast into the printed mold. The curing process was conducted under controlled conditions to achieve appropriate mechanical properties, resulting in a flexible and anatomically accurate external breast prosthesis.
+
+%%%%%%%%%%%%%Participant and Ethical Considerations}
+%	A female breast cancer survivor who underwent unilateral mastectomy was considered for this pilot study. The anatomical reference was obtained from the contralateral healthy breast. All procedures were conducted in accordance with ethical standards, and informed consent was obtained prior to data acquisition.
+
+
+%=========================
+\section{Results}
+%=========================
+
+The optical profilometry system successfully captured the breast surface, producing high-quality fringe patterns with adequate contrast. The phase-shifting algorithm enabled accurate phase retrieval, resulting in a dense and consistent phase map. Minor artifacts due to motion and respiration were observed but effectively reduced through using exponential multifrequency temporal method. After processing, a detailed three-dimensional reconstruction of the breast region was obtained. The Figure (\ref{Fig:02}) shows the 3D model obtained.
+
+ \begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.5\linewidth]{imagen3dmodel.jpeg}
+	\end{center}
+    \caption{Three-dimensional reconstruction of the breast region.}
+    \label{Fig:02}
+\end{figure}
+ 
+ 
+The point cloud of the model to prepare it for printing is showed in the Figure (\ref{Fig:03}).
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.5\linewidth]{model triang.jpeg}
+	\end{center}
+    \caption{3D model obtained.}
+    \label{Fig:03}
+    \end{figure}
+    
+The additive manufacturing process produced a mold with high dimensional accuracy and no significant defects. The prosthesis mold was fabricated using fused deposition modeling (FDM) 3D printing technology. Printing parameters such as with PLA and, time of printing was $14$ hours. Printing speed were optimized using 1mm nozzle and $13\%$ infill to ensure dimensional accuracy and structural integrity. The Figure (\ref{Fig:04}) shows the mold obtained after printing.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.5\linewidth]{prototipo.jpeg}
+	\end{center}
+    \caption{Prototype of the a) prosthesis and b) the mold.}
+    \label{Fig:04}
+    \end{figure}
+
+	
+Medical-grade silicone (Dragon skin FX pro) was then cast into the printed mold to produce the final external prosthesis. The curing process was achieved as fabrication indicates it. The prothesis result is show in the Figure (\ref{Fig:04}).
+
+%The final prosthesis design demonstrated appropriate anatomical correspondence in terms of volume, curvature, and contour.
+ %The silicone casting resulted in a prosthesis with suitable elasticity, surface uniformity, and structural integrity, preserving the features defined in the digital model.
+%=========================
+\subsection{Discussion}
+%========================
+The results of this study demonstrate the feasibility of combining optical profilometry and additive manufacturing for the development of personalized external breast prostheses. The proposed methodology enables accurate acquisition and reconstruction of patient-specific anatomy, reducing reliance on manual and subjective design processes.
+
+The use of fringe projection techniques proved effective for capturing complex surface geometries with high resolution and without exposing the patient to ionizing radiation. Additionally, the integration of CAD tools and 3D printing technologies facilitated rapid prototyping and reproducibility.
+
+Despite these advantages, certain limitations were identified. Motion artifacts during image acquisition, primarily due to respiration, introduced minor reconstruction errors. Although these were mitigated through filtering and with less capturing images, future work should explore real-time compensation techniques or faster acquisition systems.
+
+Furthermore, while the mechanical properties of the silicone prosthesis were appropriate for preliminary evaluation, additional testing is required to assess long-term durability, biocompatibility, and user comfort under daily conditions.
+
+Overall, the proposed approach offers a cost-effective and scalable alternative to traditional fabrication methods, with strong potential for clinical implementation.
+
+\section{Conclusions}
+	
+This study presents a pilot methodology for the design and fabrication of personalized external breast prostheses using optical profilometry and additive manufacturing. The results demonstrate that the proposed system can accurately capture anatomical geometry and produce prosthetic devices with adequate structural and mechanical properties.
+
+The integration of non-invasive optical acquisition, digital modeling, and rapid manufacturing techniques represents a significant advancement toward patient-specific solutions. Future work will focus on improving acquisition robustness, optimizing material properties, and conducting clinical validation studies to evaluate user satisfaction and functional outcomes.
+
+\section{Acknowledgements}
+	We acknowledge to the Consejo Nacional de Humanidades, Ciencia y Tecnología (CONAHCYT) of México.  
+	
+
+%___________________________________________________________
+	\begin{thebibliography}{99}
+		
+			
+	\bibitem{ACS2023} American Cancer Society, Breast prostheses after mastectomy, (2023).
+
+\bibitem{WHO2021} World Health Organization, Rehabilitation in health systems, (2021).
+
+\bibitem{Surmeli2025} Sürmeli, M., Postural and balance problems in breast cancer survivors and managing options, \textit{Managing Side Effects of Breast Cancer Treatment}, Springer, 2025, pp. 139-151.
+
+\bibitem{Hojan2016} Hojan, K., Manikowska, F., Chen, B., Lin, C., The influence of an external breast prosthesis on the posture of women after mastectomy, J. Back Musculoskelet. Rehabil., vol. 29, no. 2, pp. 337-342, (2016).
+
+\bibitem{Koralewska2022} Koralewska, A., Domagalska-Szopa, M., Tukowski, R., Szopa, A., Influence of the external breast prosthesis on postural control, \textit{Frontiers in Oncology}, vol. 12, (2022).
+
+\bibitem{Crompvoets2012} Crompvoets, S., Prosthetic fantasies, Social Semiotics, vol. 22, no. 1, pp. 107-120, (2012).
+
+\bibitem{Fitch2012} Fitch, M., McAndrew, A., Harris, A., Anderson, J., Kubon, T., McClennen, J., Perspectives of women about external breast prostheses, Can. Oncol. Nurs. J., vol. 22, no. 3, pp. 162-167, (2012).
+
+\bibitem{Livingston2005} Livingston, P., White, M., Roberts, S., Pritchard, E., Hayman, J., Gibbs, A., Hill, D., Women’s satisfaction with breast prosthesis, Evaluation Review, vol. 29, no. 1, pp. 65-83, (2005).
+
+\bibitem{Kastrup2024} de Negreiros Kastrup, B., Barreto, A., Gois, B., Destefani, A., Destefani, V., 3D surface imaging technologies in plastic surgery, Revista Ibero-Americana de Humanidades, Ciencias e Educacion, (2024).
+
+\bibitem{Dijkman2024} Dijkman, B., Liberton, N, Te Slaa, N., Smit, J., Wiepjes, C., Dreijerink, K.,Den Heijer, M., Verdaasdonk, R., de Blok, C., Comparative study of 3D breast volume measurement, PLoS One, vol. 19, (2024).
+
+\bibitem{Eggbeer2011} Eggbeer, D., Evans, P., Computer-aided prosthesis design, Proc. IMechE Part H, J. Engineering in Medicine, vol. 225, no. 1, pp. 94–99, (2011).
+
+\bibitem{Paxton2022} Paxton, N., Nightingale, R., Woodruff, M., Capturing patient anatomy, Curr. Opin. Biotechnol., (2022).
+
+\bibitem{Casanovas} Casanovas, A., \textit{Prehabilitation program in breast cancer patients}, Ph.D. dissertation, Universidad Internacional de Catalula, España, 2020. [Online]. Available: https://www.tdx.cat/handle/10803/693649
+
+\bibitem{AAkin2026} AAkin, T., Akin, M., Kucuk, A., Iriagac, Y., The impact of exercise prehabilitation on upper extremity range of motions, functionality and quality of life in breast cancer survivors: a prospective clinical trial. BMC Sports Science, Medicine and Rehabilitation, (2026).
+
+\bibitem{ASME2024} Helguero, C., Cansing, J., Maldonado, F., Saldarriaga, C., Amaya-Rivas, J., Anatomical Data Acquisition Protocol Using Low-Cost 3D Scanners, ASME, (2024).
+
+\bibitem{Montejo2020} Montejo, B., Blaya San, A., Armisén Bobo, P.,Montero Moreno, M.,Blaya Haro, F., Juanes, J., Custom design of 3D breast prostheses, Eighth International Conference on Technological
+Ecosystems for Enhancing Multiculturality, pp. 450–457, (2020).
+
+\bibitem{Cruz2018} Cruz, P., Hernandez, F., Zuñiga, M., Rodríguez, J., Figueroa, R., Vertiz, A., Pineda, Z., Biomimetic breast prosthesis design, Applied Sciences, vol. 8, no. 3, p. 357,  (2018).
+
+\bibitem{Cansing2024} Cansing, J., Amaya-Rivas, J., Loayza, F., Saldarriaga, C., Lara-Padilla, H., Helguero, C., Additive manufacturing of breast prostheses, Procedia CIRP, (2024).
+
+\bibitem{Zhang2025} Zhang, S., Xue, J., Yu, X., Zhang, Y., Architected materials for prostheses, Biomed. Eng. Adv., (2025).
+
+\bibitem{Regina2024} L. Regina, L., Foggiatto, J., Low-cost prosthesis manufacturing, Rapid Prototyping Journal, (2024).
+
+\bibitem{Leme2023} Leme, J., de Oliveira Spinosa, R., Leal, S., Hirsch, A., Lodovico, A., Stramandinoli-Zanicotti, L.,Kunkel,M., Moura,F. , Personalized silicone prosthesis pilot study, Clinical Biomechanics, (2023).
+				
+			
+			
+	\bibitem{Sirohi} Sirohi, S., \emph{Optical Methods of Measurement, Wholefield Techniques}, Second Edition, CRC Press, (2009).
+		
+		\bibitem{Gasvik} Gasvik, K. J., \emph{Optical Metrology}, 3rd ed., John Wiley \& Sons, (2002).
+		
+		\bibitem{Cloud} Cloud, G., \emph{Optical Methods of Engineering Analysis}, Cambridge University Press, (1995). 
+		
+		\bibitem{Malacara1} Malacara, D., \emph{Optical Shop Testing}, 3rd ed., John Wiley \& Sons, (2007).
+
+		\bibitem{Sun} Sun, H., Yang, S., Zhang, X., Yuan, L., Yang, Z., Hu, M., Simultaneous measurement of temperature and strain or temperature and curvature based on an optical fiber Mach–Zehnder interferometer. Opt. Comm., 340, 39--43, (2015).
+		
+		\bibitem{Pfeifer} Pfeifer, T., Mischo, H. K., Ettemeyer, A., Wang, Z., Wegner, R., Strain/stress measurements using electronic speckle pattern interferometry. In Three-dimensional imaging, optical metrology, and inspection IV, SPIE, 3520, 262--271, (1998).
+        
+        \bibitem{Takeda} Takeda, M., Ina, H., Kobayashi, S., Fourier-transform method of fringe pattern analysis for computer-based topography and interferometry, J. Opt. Soc. Am., vol. 72, no. 1, pp. 156–160, (1982).
+		
+	\end{thebibliography}
+	
+\end{document}
+
